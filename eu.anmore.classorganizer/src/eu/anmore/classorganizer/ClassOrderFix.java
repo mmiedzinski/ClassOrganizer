@@ -24,7 +24,8 @@ public class ClassOrderFix implements ICleanUpFix {
 		CategorizedTextEditGroup group = new CategorizedTextEditGroup(SORT_DESCRIPTION, new GroupCategorySet(
 				new GroupCategory(SORT_DESCRIPTION, SORT_DESCRIPTION, SORT_DESCRIPTION)));
 
-		TextEdit textEdit = CompilationUnitSorter.sort(compilationUnit, new ClassElementComparator(), 0, group, null);
+		TextEdit textEdit = CompilationUnitSorter.sort(compilationUnit, new ClassElementComparator(
+				getModifierResolver()), 0, group, null);
 
 		if (textEdit == null) {
 			return null;
@@ -46,6 +47,10 @@ public class ClassOrderFix implements ICleanUpFix {
 				SORT_DESCRIPTION, SORT_DESCRIPTION, SORT_DESCRIPTION))));
 
 		return change;
+	}
+
+	private static ModifierResolverImpl getModifierResolver() {
+		return new ModifierResolverImpl(new ModifierFacadeImpl());
 	}
 
 	private static final String SORT_DESCRIPTION = "Miedziu order";

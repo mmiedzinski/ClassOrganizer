@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
  */
 public class ClassElementComparator implements Comparator<BodyDeclaration> {
 
-	public ClassElementComparator() {
-		modifierResolver = new ModifierResolverImpl();
+	public ClassElementComparator(ModifierResolver modifierResolver) {
+		this.modifierResolver = modifierResolver;
 	}
 
 	@Override

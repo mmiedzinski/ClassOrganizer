@@ -1,8 +1,5 @@
 package eu.anmore.classorganizer;
 
-import java.lang.reflect.Modifier;
-
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
@@ -13,15 +10,19 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
  */
 public class ModifierResolverImpl implements ModifierResolver {
 
+	public ModifierResolverImpl(ModifierFacade modifierFacade) {
+		this.modifierFacade = modifierFacade;
+	}
+
 	@Override
 	public int resolve(BodyDeclaration bodyDeclaration) {
 		if (isMethodDeclaration(bodyDeclaration)) {
 			return resolveMethod(bodyDeclaration);
-		} else if (isFieldDeclaration(bodyDeclaration)) {
+		} else if (modifierFacade.isFieldDeclaration(bodyDeclaration)) {
 			return resolveField(bodyDeclaration);
-		} else if (isInitializerDeclaration(bodyDeclaration)) {
+		} else if (modifierFacade.isInitializerDeclaration(bodyDeclaration)) {
 			return resolveInitializer(bodyDeclaration);
-		} else if (isTypeDeclaration(bodyDeclaration)) {
+		} else if (modifierFacade.isTypeDeclaration(bodyDeclaration)) {
 			return resolveType(bodyDeclaration);
 		} else if (isConstructorDeclaration(bodyDeclaration)) {
 			return resolveConstructor(bodyDeclaration);
@@ -30,11 +31,11 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveMethod(BodyDeclaration bodyDeclaration) {
-		if (isPublic(bodyDeclaration)) {
+		if (modifierFacade.isPublic(bodyDeclaration)) {
 			return resolvePublicMethod(bodyDeclaration);
-		} else if (isProtected(bodyDeclaration)) {
+		} else if (modifierFacade.isProtected(bodyDeclaration)) {
 			return resolveProtectedMethod(bodyDeclaration);
-		} else if (isPrivate(bodyDeclaration)) {
+		} else if (modifierFacade.isPrivate(bodyDeclaration)) {
 			return resolvePrivateMethod(bodyDeclaration);
 		} else {
 			return resolveDefaultMethod(bodyDeclaration);
@@ -42,39 +43,39 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveDefaultMethod(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.DEFAULT_STATIC_METHOD;
 		}
 		return ClassOrganizerDescriptor.DEFAULT_METHOD;
 	}
 
 	private int resolvePrivateMethod(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PRIVATE_STATIC_METHOD;
 		}
 		return ClassOrganizerDescriptor.PRIVATE_METHOD;
 	}
 
 	private int resolveProtectedMethod(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PROTECTED_STATIC_METHOD;
 		}
 		return ClassOrganizerDescriptor.PROTECTED_METHOD;
 	}
 
 	private int resolvePublicMethod(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PUBLIC_STATIC_METHOD;
 		}
 		return ClassOrganizerDescriptor.PUBLIC_METHOD;
 	}
 
 	private int resolveField(BodyDeclaration bodyDeclaration) {
-		if (isPublic(bodyDeclaration)) {
+		if (modifierFacade.isPublic(bodyDeclaration)) {
 			return resolvePublicField(bodyDeclaration);
-		} else if (isProtected(bodyDeclaration)) {
+		} else if (modifierFacade.isProtected(bodyDeclaration)) {
 			return resolveProtectedField(bodyDeclaration);
-		} else if (isPrivate(bodyDeclaration)) {
+		} else if (modifierFacade.isPrivate(bodyDeclaration)) {
 			return resolvePrivateField(bodyDeclaration);
 		} else {
 			return resolveDefaultField(bodyDeclaration);
@@ -82,39 +83,39 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveDefaultField(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.DEFAULT_STATIC_FIELD;
 		}
 		return ClassOrganizerDescriptor.DEFAULT_FIELD;
 	}
 
 	private int resolvePrivateField(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PRIVATE_STATIC_FIELD;
 		}
 		return ClassOrganizerDescriptor.PRIVATE_FIELD;
 	}
 
 	private int resolveProtectedField(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PROTECTED_STATIC_FIELD;
 		}
 		return ClassOrganizerDescriptor.PROTECTED_FIELD;
 	}
 
 	private int resolvePublicField(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PUBLIC_STATIC_FIELD;
 		}
 		return ClassOrganizerDescriptor.PUBLIC_FIELD;
 	}
 
 	private int resolveInitializer(BodyDeclaration bodyDeclaration) {
-		if (isPublic(bodyDeclaration)) {
+		if (modifierFacade.isPublic(bodyDeclaration)) {
 			return resolvePublicInitializer(bodyDeclaration);
-		} else if (isProtected(bodyDeclaration)) {
+		} else if (modifierFacade.isProtected(bodyDeclaration)) {
 			return resolveProtectedInitializer(bodyDeclaration);
-		} else if (isPrivate(bodyDeclaration)) {
+		} else if (modifierFacade.isPrivate(bodyDeclaration)) {
 			return resolvePrivateInitializer(bodyDeclaration);
 		} else {
 			return resolveDefaultInitializer(bodyDeclaration);
@@ -122,39 +123,39 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveDefaultInitializer(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.DEFAULT_STATIC_INITIALIZER;
 		}
 		return ClassOrganizerDescriptor.DEFAULT_INITIALIZER;
 	}
 
 	private int resolvePrivateInitializer(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PRIVATE_STATIC_INITIALIZER;
 		}
 		return ClassOrganizerDescriptor.PRIVATE_INITIALIZER;
 	}
 
 	private int resolveProtectedInitializer(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PROTECTED_STATIC_INITIALIZER;
 		}
 		return ClassOrganizerDescriptor.PROTECTED_INITIALIZER;
 	}
 
 	private int resolvePublicInitializer(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PUBLIC_STATIC_INITIALIZER;
 		}
 		return ClassOrganizerDescriptor.PUBLIC_INITIALIZER;
 	}
 
 	private int resolveConstructor(BodyDeclaration bodyDeclaration) {
-		if (isPublic(bodyDeclaration)) {
+		if (modifierFacade.isPublic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PUBLIC_CONSTRUCTOR;
-		} else if (isProtected(bodyDeclaration)) {
+		} else if (modifierFacade.isProtected(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PROTECTED_CONSTRUCTOR;
-		} else if (isPrivate(bodyDeclaration)) {
+		} else if (modifierFacade.isPrivate(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PRIVATE_CONSTRUCTOR;
 		} else {
 			return ClassOrganizerDescriptor.DEFAULT_CONSTRUCTOR;
@@ -162,11 +163,11 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveType(BodyDeclaration bodyDeclaration) {
-		if (isPublic(bodyDeclaration)) {
+		if (modifierFacade.isPublic(bodyDeclaration)) {
 			return resolvePublicType(bodyDeclaration);
-		} else if (isProtected(bodyDeclaration)) {
+		} else if (modifierFacade.isProtected(bodyDeclaration)) {
 			return resolveProtectedType(bodyDeclaration);
-		} else if (isPrivate(bodyDeclaration)) {
+		} else if (modifierFacade.isPrivate(bodyDeclaration)) {
 			return resolvePrivateType(bodyDeclaration);
 		} else {
 			return resolveDefaultType(bodyDeclaration);
@@ -174,68 +175,40 @@ public class ModifierResolverImpl implements ModifierResolver {
 	}
 
 	private int resolveDefaultType(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.DEFAULT_STATIC_TYPE;
 		}
 		return ClassOrganizerDescriptor.DEFAULT_TYPE;
 	}
 
 	private int resolvePrivateType(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PRIVATE_STATIC_TYPE;
 		}
 		return ClassOrganizerDescriptor.PRIVATE_TYPE;
 	}
 
 	private int resolveProtectedType(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PROTECTED_STATIC_TYPE;
 		}
 		return ClassOrganizerDescriptor.PROTECTED_TYPE;
 	}
 
 	private int resolvePublicType(BodyDeclaration bodyDeclaration) {
-		if (isStatic(bodyDeclaration)) {
+		if (modifierFacade.isStatic(bodyDeclaration)) {
 			return ClassOrganizerDescriptor.PUBLIC_STATIC_TYPE;
 		}
 		return ClassOrganizerDescriptor.PUBLIC_TYPE;
 	}
 
 	private boolean isMethodDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.METHOD_DECLARATION
-				&& !((MethodDeclaration) bodyDeclaration).isConstructor();
+		return bodyDeclaration instanceof MethodDeclaration && !((MethodDeclaration) bodyDeclaration).isConstructor();
 	}
 
 	private boolean isConstructorDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.METHOD_DECLARATION
-				&& ((MethodDeclaration) bodyDeclaration).isConstructor();
+		return bodyDeclaration instanceof MethodDeclaration;
 	}
 
-	private boolean isStatic(BodyDeclaration bodyDeclaration) {
-		return Modifier.isStatic(bodyDeclaration.getModifiers());
-	}
-
-	private boolean isFieldDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.FIELD_DECLARATION;
-	}
-
-	private boolean isInitializerDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.INITIALIZER;
-	}
-
-	private boolean isTypeDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.TYPE_DECLARATION;
-	}
-
-	private boolean isPrivate(BodyDeclaration bodyDeclaration) {
-		return Modifier.isPrivate(bodyDeclaration.getModifiers());
-	}
-
-	private boolean isPublic(BodyDeclaration bodyDeclaration) {
-		return Modifier.isPublic(bodyDeclaration.getModifiers());
-	}
-
-	private boolean isProtected(BodyDeclaration bodyDeclaration) {
-		return Modifier.isProtected(bodyDeclaration.getModifiers());
-	}
+	private ModifierFacade modifierFacade;
 }

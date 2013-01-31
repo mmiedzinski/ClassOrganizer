@@ -18,6 +18,7 @@
             name="Class Organizer"
             cleanUpKind="saveAction">
       </cleanUpConfigurationUI>
+      
    </extension>
 
 </plugin>
