@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.jdt.ui.cleanUps">
+      <cleanUp
+            id="eu.anmore.classorganizer.copyright_clean_up"
+            class="eu.anmore.classorganizer.ClasOrganizerCleanUp">
+      </cleanUp>
+      
+      <cleanUpOptionsInitializer
+            class="eu.anmore.classorganizer.ClassOrganizerInitializer"
+            cleanUpKind="saveAction">
+      </cleanUpOptionsInitializer>
+      
+      <cleanUpConfigurationUI
+            class="eu.anmore.classorganizer.ClassOrganizerConfigurationPage"
+            name="Class Organizer"
+            cleanUpKind="saveAction">
+      </cleanUpConfigurationUI>
+   </extension>
+
+</plugin>

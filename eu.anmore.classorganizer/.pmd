@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd>
+    <useProjectRuleSet>true</useProjectRuleSet>
+    <ruleSetFile>/home/mmiedzinski/dev/eclipse_rcp/workspace/emed-craftsmanship/pmd/ruleset.xml</ruleSetFile>
+    <includeDerivedFiles>false</includeDerivedFiles>
+    <violationsAsErrors>true</violationsAsErrors>
+</pmd>

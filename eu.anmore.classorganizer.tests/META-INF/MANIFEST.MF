@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests project for ClassOrganizer plugin
+Fragment-Host: eu.anmore.classorganizer;bundle-version="1.0.0"
+Bundle-SymbolicName: eu.anmore.classorganizer.tests
+Bundle-Version: 1.0.0
+Bundle-Vendor: Marcin Miedziński
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit4;bundle-version="4.8.1"
+Bundle-ClassPath: lib/junit.jar,
+ lib/mockito-all.jar
