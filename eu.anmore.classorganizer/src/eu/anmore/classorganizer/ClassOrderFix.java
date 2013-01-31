@@ -21,8 +21,6 @@ import org.eclipse.text.edits.TextEdit;
 public class ClassOrderFix implements ICleanUpFix {
 
 	public static ICleanUpFix createCleanUp(CompilationUnit compilationUnit) throws CoreException {
-		ICompilationUnit cu = (ICompilationUnit) compilationUnit.getJavaElement();
-
 		CategorizedTextEditGroup group = new CategorizedTextEditGroup(SORT_DESCRIPTION, new GroupCategorySet(
 				new GroupCategory(SORT_DESCRIPTION, SORT_DESCRIPTION, SORT_DESCRIPTION)));
 
@@ -32,7 +30,7 @@ public class ClassOrderFix implements ICleanUpFix {
 			return null;
 		}
 
-		return new ClassOrderFix(textEdit, cu);
+		return new ClassOrderFix(textEdit, (ICompilationUnit) compilationUnit.getJavaElement());
 	}
 
 	public ClassOrderFix(TextEdit textEdit, ICompilationUnit compilationUnit) {

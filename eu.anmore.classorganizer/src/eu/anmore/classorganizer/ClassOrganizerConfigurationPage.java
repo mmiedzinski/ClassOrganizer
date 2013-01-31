@@ -115,17 +115,17 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		Group group = new Group(composite, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(1, false));
-		group.setText("Organize enabled.");
+		group.setText("Class organizer");
 
 		final Button updateCheckbox = new Button(group, SWT.CHECK);
 		updateCheckbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		updateCheckbox.setText("Update the Copyrights");
-		updateCheckbox.setSelection(options.isEnabled("cleanup.update_copyrights"));
+		updateCheckbox.setText("Organizer enabled");
+		updateCheckbox.setSelection(options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID));
 		updateCheckbox.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				options.setOption("cleanup.update_copyrights", updateCheckbox.getSelection() ? CleanUpOptions.TRUE
-						: CleanUpOptions.FALSE);
+				options.setOption(ClassOrganizerDescriptor.CLEANUP_ID,
+						updateCheckbox.getSelection() ? CleanUpOptions.TRUE : CleanUpOptions.FALSE);
 			}
 		});
 	}
@@ -142,7 +142,7 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 
 	@Override
 	public int getSelectedCleanUpCount() {
-		return options.isEnabled("cleanup.update_copyrights") ? 1 : 0;
+		return options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID) ? 1 : 0;
 	}
 
 	@Override

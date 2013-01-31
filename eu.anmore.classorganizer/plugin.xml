@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.jdt.ui.cleanUps">
       <cleanUp
-            id="eu.anmore.classorganizer.copyright_clean_up"
-            class="eu.anmore.classorganizer.ClasOrganizerCleanUp">
+            id="eu.anmore.classorganizer.cleanup.classorganizer"
+            class="eu.anmore.classorganizer.ClassOrganizerCleanUp">
       </cleanUp>
       
       <cleanUpOptionsInitializer

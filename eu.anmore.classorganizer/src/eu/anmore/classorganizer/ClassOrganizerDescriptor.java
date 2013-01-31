@@ -23,6 +23,8 @@ public final class ClassOrganizerDescriptor {
 
 	static final int PRIVATE_FIELD = 7;
 
+	static final String CLEANUP_ID = "cleanup.update";
+
 	private ClassOrganizerDescriptor() {
 		// initially left blank
 	}

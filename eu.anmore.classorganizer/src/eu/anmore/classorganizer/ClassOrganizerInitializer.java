@@ -12,6 +12,6 @@ public class ClassOrganizerInitializer implements ICleanUpOptionsInitializer {
 
 	@Override
 	public void setDefaultOptions(CleanUpOptions options) {
-		options.setOption("cleanup.update_copyrights", CleanUpOptions.TRUE);
+		options.setOption(ClassOrganizerDescriptor.CLEANUP_ID, CleanUpOptions.TRUE);
 	}
 }
