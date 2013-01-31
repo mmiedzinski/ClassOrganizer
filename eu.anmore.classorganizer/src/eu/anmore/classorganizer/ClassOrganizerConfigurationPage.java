@@ -29,13 +29,6 @@ import org.eclipse.swt.widgets.Layout;
  */
 public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI {
 
-	private PixelConverter fPixelConverter;
-	private CleanUpOptions options;
-
-	public ClassOrganizerConfigurationPage() {
-		super();
-	}
-
 	@Override
 	public Composite createContents(Composite parent) {
 		final int numColumns = 4;
@@ -105,12 +98,61 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		return sashForm;
 	}
 
-	/**
-	 * Creates the preferences for the tab page.
-	 * 
-	 * @param composite
-	 *            Composite to create in
-	 */
+	@Override
+	public int getCleanUpCount() {
+		return 1;
+	}
+
+	@Override
+	public String getPreview() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("\npublic class SampleClass {\n\n");
+		stringBuilder.append("\tpublic static void staticPublicMethod() {\n\t}\n\n");
+		stringBuilder.append("\tpublic static int staticPublicField;\n\n");
+		stringBuilder.append("\tpublic static enum NewStaticPublicType {\n\t\tSAMPLE\n\t}\n\n");
+		stringBuilder.append("\tpublic SampleClass {\n\t}\n\n");
+		stringBuilder.append("\tpublic void publicMethod() {\n\t}\n\n");
+		stringBuilder.append("\tpublic int publicField;\n\n");
+		stringBuilder.append("\tpublic enum NewPublicType {\n\t\tSAMPLE\n\t}\n\n");
+
+		stringBuilder.append("\tprotected static void staticProtectedMethod() {\n\t}\n\n");
+		stringBuilder.append("\tprotected static int staticProtectedField;\n\n");
+		stringBuilder.append("\tprotected static enum NewStaticProtectedType {\n\t\tSAMPLE\n\t}\n\n");
+		stringBuilder.append("\tprotected SampleClass {\n\t}\n\n");
+		stringBuilder.append("\tprotected void protectedMethod() {\n\t}\n\n");
+		stringBuilder.append("\tprotected int protectedField;\n\n");
+		stringBuilder.append("\tprotected enum NewProtectedType {\n\t\tSAMPLE\n\t}\n\n");
+
+		stringBuilder.append("\tstatic void staticDefaultMethod() {\n\t}\n\n");
+		stringBuilder.append("\tstatic int staticDefaultField;\n\n");
+		stringBuilder.append("\tstatic enum NewStaticDefaultType {\n\t\tSAMPLE\n\t}\n\n");
+		stringBuilder.append("\tSampleClass {\n\t}\n\n");
+		stringBuilder.append("\tvoid defaultMethod() {\n\t}\n\n");
+		stringBuilder.append("\tint defaultField;\n\n");
+		stringBuilder.append("\tenum NewDefaultType {\n\t\tSAMPLE\n\t}\n\n");
+
+		stringBuilder.append("\tprivate static void staticPrivateMethod() {\n\t}\n\n");
+		stringBuilder.append("\tprivate static int staticPrivateField;\n\n");
+		stringBuilder.append("\tprivate static enum NewStaticPrivateType {\n\t\tSAMPLE\n\t}\n\n");
+		stringBuilder.append("\tprivate SampleClass {\n\t}\n\n");
+		stringBuilder.append("\tprivate void privateMethod() {\n\t}\n\n");
+		stringBuilder.append("\tprivate int privateField;\n\n");
+		stringBuilder.append("\tprivate enum NewPrivateType {\n\t\tSAMPLE\n\t}\n");
+
+		stringBuilder.append("}");
+		return stringBuilder.toString();
+	}
+
+	@Override
+	public int getSelectedCleanUpCount() {
+		return options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID) ? 1 : 0;
+	}
+
+	@Override
+	public void setOptions(CleanUpOptions options) {
+		this.options = options;
+	}
+
 	protected void doCreatePreferences(Composite composite) {
 		Group group = new Group(composite, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -128,26 +170,6 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 						updateCheckbox.getSelection() ? CleanUpOptions.TRUE : CleanUpOptions.FALSE);
 			}
 		});
-	}
-
-	@Override
-	public int getCleanUpCount() {
-		return 1;
-	}
-
-	@Override
-	public String getPreview() {
-		return "Preview TODO";
-	}
-
-	@Override
-	public int getSelectedCleanUpCount() {
-		return options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID) ? 1 : 0;
-	}
-
-	@Override
-	public void setOptions(CleanUpOptions options) {
-		this.options = options;
 	}
 
 	/**
@@ -213,4 +235,8 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 			}
 		}
 	}
+
+	private PixelConverter fPixelConverter;
+
+	private CleanUpOptions options;
 }
