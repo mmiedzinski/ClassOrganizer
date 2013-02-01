@@ -134,15 +134,6 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		this.options = options;
 	}
 
-	protected void doCreatePreferences(Composite composite) {
-		Group group = createGroup(composite);
-		createCheckbox(group);
-	}
-
-	/**
-	 * Layout used for the settings part. Makes sure to show scrollbars if
-	 * necessary. The settings part needs to be layouted on resize.
-	 */
 	private static final class PageLayout extends Layout {
 
 		@Override
@@ -203,6 +194,11 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		private final int fMinimalWidth;
 
 		private final int fMinimalHight;
+	}
+
+	private void doCreatePreferences(Composite composite) {
+		Group group = createGroup(composite);
+		createCheckbox(group);
 	}
 
 	private void createCheckbox(Group group) {

@@ -9,12 +9,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jdt.ui,
  org.eclipse.jdt.core,
- org.eclipse.ltk.core.refactoring
+ org.eclipse.ltk.core.refactoring,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jdt.core.refactoring,
  org.eclipse.text.edits
-Bundle-ClassPath: lib/logback-classic.jar,
- lib/logback-core.jar,
- lib/slf4j-api.jar,
- .
+Bundle-ClassPath: .

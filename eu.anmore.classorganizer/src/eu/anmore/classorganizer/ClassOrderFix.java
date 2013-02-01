@@ -5,7 +5,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.refactoring.CompilationUnitChange;
-import org.eclipse.jdt.core.util.CompilationUnitSorter;
 import org.eclipse.jdt.ui.cleanup.ICleanUpFix;
 import org.eclipse.ltk.core.refactoring.CategorizedTextEditGroup;
 import org.eclipse.ltk.core.refactoring.GroupCategory;
@@ -20,12 +19,13 @@ import org.eclipse.text.edits.TextEdit;
  */
 public class ClassOrderFix implements ICleanUpFix {
 
-	public static ICleanUpFix createCleanUp(CompilationUnit compilationUnit) throws CoreException {
+	public static ICleanUpFix createCleanUp(CompilationUnit compilationUnit,
+			CompilationUnitSorterFacade compilationUnitSorterFacade) throws CoreException {
 		CategorizedTextEditGroup group = new CategorizedTextEditGroup(SORT_DESCRIPTION, new GroupCategorySet(
 				new GroupCategory(SORT_DESCRIPTION, SORT_DESCRIPTION, SORT_DESCRIPTION)));
 
-		TextEdit textEdit = CompilationUnitSorter.sort(compilationUnit, new ClassElementComparator(
-				getModifierResolver()), 0, group, null);
+		TextEdit textEdit = compilationUnitSorterFacade.sort(compilationUnit, new ClassElementComparator(
+				getModifierResolver()), 0, group);
 
 		if (textEdit == null) {
 			return null;

@@ -1,6 +1,5 @@
 package eu.anmore.classorganizer;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -48,7 +47,7 @@ public class ClassOrganizerCleanUp implements ICleanUp {
 		if (compilationUnit == null || !isCleanUpEnabled()) {
 			return null;
 		}
-		return ClassOrderFix.createCleanUp(compilationUnit);
+		return ClassOrderFix.createCleanUp(compilationUnit, getCompilationUnitSorterFacade());
 	}
 
 	@Override
@@ -69,9 +68,11 @@ public class ClassOrganizerCleanUp implements ICleanUp {
 
 	@Override
 	public void setOptions(CleanUpOptions options) {
-		Assert.isLegal(options != null);
-		Assert.isTrue(this.options == null);
 		this.options = options;
+	}
+
+	protected CompilationUnitSorterFacade getCompilationUnitSorterFacade() {
+		return new CompilationUnitSorterFacade();
 	}
 
 	private boolean isCleanUpEnabled() {
