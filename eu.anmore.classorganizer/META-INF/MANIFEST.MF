@@ -8,8 +8,8 @@ Bundle-Vendor: Marcin Miedzińśki
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jdt.ui,
- org.eclipse.jdt.core;bundle-version="3.8.2",
- org.eclipse.ltk.core.refactoring;bundle-version="3.6.0"
+ org.eclipse.jdt.core,
+ org.eclipse.ltk.core.refactoring
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jdt.core.refactoring,

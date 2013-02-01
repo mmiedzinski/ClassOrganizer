@@ -33,24 +33,12 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 	public Composite createContents(Composite parent) {
 		final int numColumns = 4;
 
-		if (fPixelConverter == null) {
-			fPixelConverter = new PixelConverter(parent);
-		}
+		PixelConverter pixelConverter = new PixelConverter(parent);
 
-		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
-		sashForm.setFont(parent.getFont());
+		final SashForm sashForm = createSashForm(parent);
 
 		Composite scrollContainer = new Composite(sashForm, SWT.NONE);
-
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		scrollContainer.setLayoutData(gridData);
-
-		GridLayout layout = new GridLayout(2, false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
-		scrollContainer.setLayout(layout);
+		scrollContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		ScrolledComposite scroll = new ScrolledComposite(scrollContainer, SWT.V_SCROLL | SWT.H_SCROLL);
 		scroll.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -68,13 +56,7 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		Composite settingsPane = new Composite(settingsContainer, SWT.NONE);
 		settingsPane.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		layout = new GridLayout(numColumns, false);
-		layout.verticalSpacing = (int) (1.5 * fPixelConverter
-				.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING));
-		layout.horizontalSpacing = fPixelConverter.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
-		layout.marginHeight = fPixelConverter.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
-		layout.marginWidth = fPixelConverter.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
-		settingsPane.setLayout(layout);
+		setLayout(numColumns, pixelConverter, scrollContainer, settingsPane);
 		doCreatePreferences(settingsPane);
 
 		settingsContainer.setSize(settingsContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -92,8 +74,7 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 		});
 
 		Label sashHandle = new Label(scrollContainer, SWT.SEPARATOR | SWT.VERTICAL);
-		gridData = new GridData(SWT.RIGHT, SWT.FILL, false, true);
-		sashHandle.setLayoutData(gridData);
+		sashHandle.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, true));
 
 		return sashForm;
 	}
@@ -154,22 +135,8 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 	}
 
 	protected void doCreatePreferences(Composite composite) {
-		Group group = new Group(composite, SWT.NONE);
-		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		group.setLayout(new GridLayout(1, false));
-		group.setText("Class organizer");
-
-		final Button updateCheckbox = new Button(group, SWT.CHECK);
-		updateCheckbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		updateCheckbox.setText("Organizer enabled");
-		updateCheckbox.setSelection(options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID));
-		updateCheckbox.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				options.setOption(ClassOrganizerDescriptor.CLEANUP_ID,
-						updateCheckbox.getSelection() ? CleanUpOptions.TRUE : CleanUpOptions.FALSE);
-			}
-		});
+		Group group = createGroup(composite);
+		createCheckbox(group);
 	}
 
 	/**
@@ -177,16 +144,6 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 	 * necessary. The settings part needs to be layouted on resize.
 	 */
 	private static final class PageLayout extends Layout {
-
-		private final ScrolledComposite fContainer;
-		private final int fMinimalWidth;
-		private final int fMinimalHight;
-
-		private PageLayout(ScrolledComposite container, int minimalWidth, int minimalHight) {
-			fContainer = container;
-			fMinimalWidth = minimalWidth;
-			fMinimalHight = minimalHight;
-		}
 
 		@Override
 		public Point computeSize(Composite composite, int wHint, int hHint, boolean force) {
@@ -234,9 +191,60 @@ public class ClassOrganizerConfigurationPage implements ICleanUpConfigurationUI 
 				children[i].setSize(rect.width, rect.height);
 			}
 		}
+
+		private PageLayout(ScrolledComposite container, int minimalWidth, int minimalHight) {
+			fContainer = container;
+			fMinimalWidth = minimalWidth;
+			fMinimalHight = minimalHight;
+		}
+
+		private final ScrolledComposite fContainer;
+
+		private final int fMinimalWidth;
+
+		private final int fMinimalHight;
 	}
 
-	private PixelConverter fPixelConverter;
+	private void createCheckbox(Group group) {
+		final Button updateCheckbox = new Button(group, SWT.CHECK);
+		updateCheckbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		updateCheckbox.setText("Organizer enabled");
+		updateCheckbox.setSelection(options.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID));
+		updateCheckbox.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				options.setOption(ClassOrganizerDescriptor.CLEANUP_ID,
+						updateCheckbox.getSelection() ? CleanUpOptions.TRUE : CleanUpOptions.FALSE);
+			}
+		});
+	}
+
+	private Group createGroup(Composite composite) {
+		Group group = new Group(composite, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		group.setLayout(new GridLayout(1, false));
+		group.setText("Class organizer");
+		return group;
+	}
+
+	private void setLayout(final int numColumns, PixelConverter pixelConverter, Composite scrollContainer,
+			Composite settingsPane) {
+		GridLayout layout = new GridLayout(2, false);
+		scrollContainer.setLayout(layout);
+		layout = new GridLayout(numColumns, false);
+		layout.verticalSpacing = (int) (1.5 * pixelConverter
+				.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING));
+		layout.horizontalSpacing = pixelConverter.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+		layout.marginHeight = pixelConverter.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
+		layout.marginWidth = pixelConverter.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
+		settingsPane.setLayout(layout);
+	}
+
+	private SashForm createSashForm(Composite parent) {
+		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
+		sashForm.setFont(parent.getFont());
+		return sashForm;
+	}
 
 	private CleanUpOptions options;
 }
