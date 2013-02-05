@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.ui.cleanup.CleanUpContext;
 import org.eclipse.jdt.ui.cleanup.CleanUpOptions;
@@ -153,9 +154,55 @@ public class ClassOrganizerCleanUpTest {
 	}
 
 	@Test
+	public void shouldntCreateFixWhenCompileErrorsOccur() throws CoreException {
+		// given
+		IProblem warningMock = mock(IProblem.class);
+		when(warningMock.isError()).thenReturn(false);
+		IProblem errorMock = mock(IProblem.class);
+		when(errorMock.isError()).thenReturn(true);
+
+		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] { warningMock, errorMock });
+
+		CleanUpContext contextMock = mock(CleanUpContext.class);
+		when(contextMock.getAST()).thenReturn(compilationUnitMock);
+
+		when(cleanOptionsMock.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID)).thenReturn(true);
+
+		// when
+		ICleanUpFix result = cleanUp.createFix(contextMock);
+
+		// then
+		assertNull(result);
+	}
+
+	@Test
 	public void shouldntCreateFix() throws CoreException {
 		// given
 		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] {});
+
+		CleanUpContext contextMock = mock(CleanUpContext.class);
+		when(contextMock.getAST()).thenReturn(compilationUnitMock);
+
+		when(cleanOptionsMock.isEnabled(ClassOrganizerDescriptor.CLEANUP_ID)).thenReturn(true);
+		preparePartialMockOfCleanUp(contextMock);
+
+		// when
+		ICleanUpFix result = cleanUp.createFix(contextMock);
+
+		// then
+		assertNotNull(result);
+	}
+
+	@Test
+	public void shouldCreateFixWhenCompileWarningsOccur() throws CoreException {
+		// given
+		IProblem warningMock = mock(IProblem.class);
+		when(warningMock.isError()).thenReturn(false);
+
+		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] { warningMock });
 
 		CleanUpContext contextMock = mock(CleanUpContext.class);
 		when(contextMock.getAST()).thenReturn(compilationUnitMock);

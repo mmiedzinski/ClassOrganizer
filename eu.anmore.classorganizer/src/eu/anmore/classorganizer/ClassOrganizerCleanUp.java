@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.ui.cleanup.CleanUpContext;
 import org.eclipse.jdt.ui.cleanup.CleanUpOptions;
@@ -44,7 +45,7 @@ public class ClassOrganizerCleanUp implements ICleanUp {
 	@Override
 	public ICleanUpFix createFix(CleanUpContext context) throws CoreException {
 		CompilationUnit compilationUnit = context.getAST();
-		if (compilationUnit == null || !isCleanUpEnabled()) {
+		if (compilationUnit == null || !isCleanUpEnabled() || hasCompilationError(compilationUnit)) {
 			return null;
 		}
 		return ClassOrderFix.createCleanUp(compilationUnit, getCompilationUnitSorterFacade());
@@ -73,6 +74,15 @@ public class ClassOrganizerCleanUp implements ICleanUp {
 
 	protected CompilationUnitSorterFacade getCompilationUnitSorterFacade() {
 		return new CompilationUnitSorterFacade();
+	}
+
+	private boolean hasCompilationError(CompilationUnit compilationUnit) throws CoreException {
+		for (IProblem problem : compilationUnit.getProblems()) {
+			if (problem.isError()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isCleanUpEnabled() {
