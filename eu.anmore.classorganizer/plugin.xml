@@ -4,21 +4,36 @@
    <extension
          point="org.eclipse.jdt.ui.cleanUps">
       <cleanUp
-            id="eu.anmore.classorganizer.cleanup.classorganizer"
-            class="eu.anmore.classorganizer.ClassOrganizerCleanUp">
+            id="eu.anmore.classorganizer.cleanup.classorganizer.saveaction"
+            class="eu.anmore.classorganizer.ClassOrganizerSaveCleanUp">
       </cleanUp>
       
       <cleanUpOptionsInitializer
-            class="eu.anmore.classorganizer.ClassOrganizerInitializer"
+            class="eu.anmore.classorganizer.ClassOrganizerSaveActionInitializer"
             cleanUpKind="saveAction">
       </cleanUpOptionsInitializer>
       
       <cleanUpConfigurationUI
-            class="eu.anmore.classorganizer.ClassOrganizerConfigurationPage"
+            class="eu.anmore.classorganizer.ClassOrganizerSaveActionConfigurationPage"
             name="Class Organizer"
             cleanUpKind="saveAction">
       </cleanUpConfigurationUI>
       
+      <cleanUp
+            id="eu.anmore.classorganizer.cleanup.classorganizer"
+            class="eu.anmore.classorganizer.ClassOrganizerCleanUp">
+      </cleanUp>
+      
+      <cleanUpConfigurationUI
+            class="eu.anmore.classorganizer.ClassOrganizerCleanUpConfigurationPage"
+            name="Class Organizer"
+            cleanUpKind="cleanUp">
+      </cleanUpConfigurationUI>
+      
+      <cleanUpOptionsInitializer
+            class="eu.anmore.classorganizer.ClassOrganizerCleanUpInitializer"
+            cleanUpKind="cleanUp">
+      </cleanUpOptionsInitializer>
    </extension>
 
 </plugin>
