@@ -3,5 +3,9 @@
    <feature url="features/eu.anmore.classorganizer.feature_2.0.0.jar" id="eu.anmore.classorganizer.feature" version="2.0.0">
       <category name="eu.anmore"/>
    </feature>
-   <category-def name="eu.anmore" label="eu.anmore"/>
+   <category-def name="eu.anmore" label="ClassOrganizer">
+      <description>
+         SCMFIT plugin for Eclipse.
+      </description>
+   </category-def>
 </site>

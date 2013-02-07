@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="eu.anmore.classorganizer.feature"
-      label="Feature"
+      label="Class Organizer"
       version="2.0.0"
       provider-name="Marcin Miedziński">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      SCMFIT plugin for Eclipse.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
-   </copyright>
-
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
-   </license>
+   <url>
+      <update url="http://anmore.eu/mmiedzinski/classorganizer"/>
+   </url>
 
    <plugin
          id="eu.anmore.classorganizer"
