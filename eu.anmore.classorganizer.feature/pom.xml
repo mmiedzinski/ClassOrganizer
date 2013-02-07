@@ -4,8 +4,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>eu.anmore.classorganizer</artifactId>
-	<name>ClassOrganizer plugin</name>
+	<name>ClassOrganizer feature</name>
 
 	<parent>
 		<groupId>eu.anmore.classorganizer</groupId>
@@ -14,5 +13,6 @@
 		<relativePath>../eu.anmore.classorganizer.parent/pom.xml</relativePath>
 	</parent>
 
-	<packaging>eclipse-plugin</packaging>
+	<artifactId>eu.anmore.classorganizer.feature</artifactId>
+	<packaging>eclipse-feature</packaging>
 </project>

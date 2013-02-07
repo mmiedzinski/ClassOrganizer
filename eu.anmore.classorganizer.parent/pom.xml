@@ -12,8 +12,9 @@
 	<description>Parent project for modules of eu.anmore.classorganizer</description>
 
 	<modules>
-		<!-- plugins -->
 		<module>../eu.anmore.classorganizer</module>
+		<module>../eu.anmore.classorganizer.feature</module>
+		<module>../eu.anmore.classorganizer.updatesite</module>
 		<module>../eu.anmore.classorganizer.tests</module>
 	</modules>
 

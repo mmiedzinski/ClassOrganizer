@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/eu.anmore.classorganizer.feature_2.0.0.jar" id="eu.anmore.classorganizer.feature" version="2.0.0">
+      <category name="eu.anmore"/>
+   </feature>
+   <category-def name="eu.anmore" label="eu.anmore"/>
+</site>
