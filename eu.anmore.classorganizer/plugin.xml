@@ -9,12 +9,12 @@
       </cleanUp>
       
       <cleanUpOptionsInitializer
-            class="eu.anmore.classorganizer.ClassOrganizerSaveActionInitializer"
+            class="eu.anmore.classorganizer.initializer.ClassOrganizerSaveActionInitializer"
             cleanUpKind="saveAction">
       </cleanUpOptionsInitializer>
       
       <cleanUpConfigurationUI
-            class="eu.anmore.classorganizer.ClassOrganizerSaveActionConfigurationPage"
+            class="eu.anmore.classorganizer.configuration.ClassOrganizerSaveActionConfigurationPage"
             name="Class Organizer"
             cleanUpKind="saveAction">
       </cleanUpConfigurationUI>
@@ -25,13 +25,13 @@
       </cleanUp>
       
       <cleanUpConfigurationUI
-            class="eu.anmore.classorganizer.ClassOrganizerCleanUpConfigurationPage"
+            class="eu.anmore.classorganizer.configuration.ClassOrganizerCleanUpConfigurationPage"
             name="Class Organizer"
             cleanUpKind="cleanUp">
       </cleanUpConfigurationUI>
       
       <cleanUpOptionsInitializer
-            class="eu.anmore.classorganizer.ClassOrganizerCleanUpInitializer"
+            class="eu.anmore.classorganizer.initializer.ClassOrganizerCleanUpInitializer"
             cleanUpKind="cleanUp">
       </cleanUpOptionsInitializer>
    </extension>

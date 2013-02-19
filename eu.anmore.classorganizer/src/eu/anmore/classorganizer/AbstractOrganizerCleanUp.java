@@ -13,6 +13,8 @@ import org.eclipse.jdt.ui.cleanup.ICleanUp;
 import org.eclipse.jdt.ui.cleanup.ICleanUpFix;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
+import eu.anmore.classorganizer.utils.CompilationUnitSorterFacade;
+
 /**
  * Class organizer abstract class.
  * 

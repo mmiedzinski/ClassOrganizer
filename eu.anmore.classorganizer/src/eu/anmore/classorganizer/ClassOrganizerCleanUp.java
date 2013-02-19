@@ -7,9 +7,12 @@ package eu.anmore.classorganizer;
  */
 public class ClassOrganizerCleanUp extends AbstractOrganizerCleanUp {
 
+	/**
+	 * Cleanup id.
+	 */
+	public static final String CLEANUP_ID = "classOrganizer.cleanUp";
+
 	public ClassOrganizerCleanUp() {
 		super(CLEANUP_ID);
 	}
-
-	static final String CLEANUP_ID = "classOrganizer.cleanUp";
 }

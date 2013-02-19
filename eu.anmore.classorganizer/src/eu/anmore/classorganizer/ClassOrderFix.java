@@ -11,6 +11,11 @@ import org.eclipse.ltk.core.refactoring.GroupCategory;
 import org.eclipse.ltk.core.refactoring.GroupCategorySet;
 import org.eclipse.text.edits.TextEdit;
 
+import eu.anmore.classorganizer.utils.ClassElementComparator;
+import eu.anmore.classorganizer.utils.CompilationUnitSorterFacade;
+import eu.anmore.classorganizer.utils.ModifierFacadeImpl;
+import eu.anmore.classorganizer.utils.ModifierResolverImpl;
+
 /**
  * Determines order in class.
  * 

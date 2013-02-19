@@ -24,6 +24,9 @@ import org.eclipse.text.edits.TextEdit;
 import org.junit.Before;
 import org.junit.Test;
 
+import eu.anmore.classorganizer.utils.ClassElementComparator;
+import eu.anmore.classorganizer.utils.CompilationUnitSorterFacade;
+
 /**
  * Test class for {@link ClassOrganizerSaveCleanUp}.
  * 
