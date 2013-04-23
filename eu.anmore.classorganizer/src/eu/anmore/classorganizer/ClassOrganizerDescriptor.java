@@ -29,91 +29,91 @@ public final class ClassOrganizerDescriptor {
 	public static final int PUBLIC_FIELD = 6;
 
 	/** Member priority */
-	public static final int PUBLIC_INITIALIZER = 7;
+	public static final int PUBLIC_TYPE = 7;
 
 	/** Member priority */
-	public static final int PUBLIC_TYPE = 8;
+	public static final int PROTECTED_STATIC_METHOD = 8;
 
 	/** Member priority */
-	public static final int PROTECTED_STATIC_METHOD = 9;
+	public static final int PROTECTED_STATIC_FIELD = 9;
 
 	/** Member priority */
-	public static final int PROTECTED_STATIC_FIELD = 10;
+	public static final int PROTECTED_STATIC_INITIALIZER = 10;
 
 	/** Member priority */
-	public static final int PROTECTED_STATIC_INITIALIZER = 11;
+	public static final int PROTECTED_STATIC_TYPE = 11;
 
 	/** Member priority */
-	public static final int PROTECTED_STATIC_TYPE = 12;
+	public static final int PROTECTED_CONSTRUCTOR = 12;
 
 	/** Member priority */
-	public static final int PROTECTED_CONSTRUCTOR = 13;
+	public static final int PROTECTED_METHOD = 13;
 
 	/** Member priority */
-	public static final int PROTECTED_METHOD = 14;
+	public static final int PROTECTED_FIELD = 14;
 
 	/** Member priority */
-	public static final int PROTECTED_FIELD = 15;
+	public static final int PROTECTED_INITIALIZER = 15;
 
 	/** Member priority */
-	public static final int PROTECTED_INITIALIZER = 16;
+	public static final int PROTECTED_TYPE = 16;
 
 	/** Member priority */
-	public static final int PROTECTED_TYPE = 17;
+	public static final int DEFAULT_STATIC_METHOD = 17;
 
 	/** Member priority */
-	public static final int DEFAULT_STATIC_METHOD = 18;
+	public static final int DEFAULT_STATIC_FIELD = 18;
 
 	/** Member priority */
-	public static final int DEFAULT_STATIC_FIELD = 19;
+	public static final int DEFAULT_STATIC_TYPE = 10;
 
 	/** Member priority */
-	public static final int DEFAULT_STATIC_INITIALIZER = 20;
+	public static final int DEFAULT_CONSTRUCTOR = 20;
 
 	/** Member priority */
-	public static final int DEFAULT_STATIC_TYPE = 21;
+	public static final int DEFAULT_METHOD = 21;
 
 	/** Member priority */
-	public static final int DEFAULT_CONSTRUCTOR = 22;
+	public static final int DEFAULT_FIELD = 22;
 
 	/** Member priority */
-	public static final int DEFAULT_METHOD = 23;
+	public static final int DEFAULT_INITIALIZER = 23;
 
 	/** Member priority */
-	public static final int DEFAULT_FIELD = 24;
+	public static final int DEFAULT_TYPE = 24;
 
 	/** Member priority */
-	public static final int DEFAULT_INITIALIZER = 25;
+	public static final int PRIVATE_STATIC_METHOD = 25;
 
 	/** Member priority */
-	public static final int DEFAULT_TYPE = 26;
+	public static final int PRIVATE_STATIC_FIELD = 26;
 
 	/** Member priority */
-	public static final int PRIVATE_STATIC_METHOD = 27;
+	public static final int PRIVATE_STATIC_TYPE = 27;
 
 	/** Member priority */
-	public static final int PRIVATE_STATIC_FIELD = 28;
+	public static final int PRIVATE_CONSTRUCTOR = 28;
 
 	/** Member priority */
-	public static final int PRIVATE_STATIC_INITIALIZER = 29;
+	public static final int PRIVATE_METHOD = 29;
 
 	/** Member priority */
-	public static final int PRIVATE_STATIC_TYPE = 30;
+	public static final int PRIVATE_FIELD = 30;
 
 	/** Member priority */
-	public static final int PRIVATE_CONSTRUCTOR = 31;
+	public static final int PRIVATE_INITIALIZER = 31;
 
 	/** Member priority */
-	public static final int PRIVATE_METHOD = 32;
+	public static final int PRIVATE_TYPE = 32;
 
 	/** Member priority */
-	public static final int PRIVATE_FIELD = 33;
+	public static final int PUBLIC_INITIALIZER = 33;
 
 	/** Member priority */
-	public static final int PRIVATE_INITIALIZER = 34;
+	public static final int DEFAULT_STATIC_INITIALIZER = 34;
 
 	/** Member priority */
-	public static final int PRIVATE_TYPE = 35;
+	public static final int PRIVATE_STATIC_INITIALIZER = 35;
 
 	private ClassOrganizerDescriptor() {
 		// initially left blank
