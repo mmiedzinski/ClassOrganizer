@@ -47,7 +47,7 @@ public class ClassOrganizerSaveCleanUpTest {
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
 
 		// when
-		RefactoringStatus checkPreConditions = cleanUp.checkPreConditions(null, null, null);
+		final RefactoringStatus checkPreConditions = cleanUp.checkPreConditions(null, null, null);
 
 		// then
 		assertNotNull(checkPreConditions);
@@ -59,7 +59,7 @@ public class ClassOrganizerSaveCleanUpTest {
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(false);
 
 		// when
-		RefactoringStatus checkPreConditions = cleanUp.checkPreConditions(null, null, null);
+		final RefactoringStatus checkPreConditions = cleanUp.checkPreConditions(null, null, null);
 
 		// then
 		assertNotNull(checkPreConditions);
@@ -70,7 +70,7 @@ public class ClassOrganizerSaveCleanUpTest {
 		// given
 
 		// when
-		RefactoringStatus checkPostConditions = cleanUp.checkPostConditions(null);
+		final RefactoringStatus checkPostConditions = cleanUp.checkPostConditions(null);
 
 		// then
 		assertNotNull(checkPostConditions);
@@ -80,10 +80,10 @@ public class ClassOrganizerSaveCleanUpTest {
 	public void shouldReturnNewRefactoringStatusWhenStatusIsOk() throws CoreException {
 		// given
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
-		RefactoringStatus unexpected = cleanUp.checkPreConditions(null, null, null);
+		final RefactoringStatus unexpected = cleanUp.checkPreConditions(null, null, null);
 
 		// when
-		RefactoringStatus checkPostConditions = cleanUp.checkPostConditions(null);
+		final RefactoringStatus checkPostConditions = cleanUp.checkPostConditions(null);
 
 		// then
 		assertNotNull(checkPostConditions);
@@ -94,25 +94,29 @@ public class ClassOrganizerSaveCleanUpTest {
 	public void shouldGetStepDescriptions() {
 		// given
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
+		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY))
+				.thenReturn(true);
 
 		// when
-		String[] stepDescriptions = cleanUp.getStepDescriptions();
+		final String[] stepDescriptions = cleanUp.getStepDescriptions();
 
 		// then
 		assertNotNull(stepDescriptions);
-		assertEquals(1, stepDescriptions.length);
+		assertEquals(2, stepDescriptions.length);
 	}
 
 	@Test
 	public void shouldntGetStepDescriptions() {
 		// given
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(false);
+		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY))
+				.thenReturn(false);
 
 		// when
-		String[] stepDescriptions = cleanUp.getStepDescriptions();
+		final String[] stepDescriptions = cleanUp.getStepDescriptions();
 
 		// then
-		assertNull(stepDescriptions);
+		assertEquals(0, stepDescriptions.length);
 	}
 
 	@Test
@@ -121,7 +125,7 @@ public class ClassOrganizerSaveCleanUpTest {
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
 
 		// when
-		CleanUpRequirements requirements = cleanUp.getRequirements();
+		final CleanUpRequirements requirements = cleanUp.getRequirements();
 
 		// then
 		assertNotNull(requirements);
@@ -130,15 +134,15 @@ public class ClassOrganizerSaveCleanUpTest {
 	@Test
 	public void shouldntCreateFixWhenDisabled() throws CoreException {
 		// given
-		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		final CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
 
-		CleanUpContext contextMock = mock(CleanUpContext.class);
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
 		when(contextMock.getAST()).thenReturn(compilationUnitMock);
 
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(false);
 
 		// when
-		ICleanUpFix result = cleanUp.createFix(contextMock);
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
 
 		// then
 		assertNull(result);
@@ -147,10 +151,10 @@ public class ClassOrganizerSaveCleanUpTest {
 	@Test
 	public void shouldntCreateFixWhenCompilationUnitIsNull() throws CoreException {
 		// given
-		CleanUpContext contextMock = mock(CleanUpContext.class);
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
 
 		// when
-		ICleanUpFix result = cleanUp.createFix(contextMock);
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
 
 		// then
 		assertNull(result);
@@ -159,21 +163,21 @@ public class ClassOrganizerSaveCleanUpTest {
 	@Test
 	public void shouldntCreateFixWhenCompileErrorsOccur() throws CoreException {
 		// given
-		IProblem warningMock = mock(IProblem.class);
+		final IProblem warningMock = mock(IProblem.class);
 		when(warningMock.isError()).thenReturn(false);
-		IProblem errorMock = mock(IProblem.class);
+		final IProblem errorMock = mock(IProblem.class);
 		when(errorMock.isError()).thenReturn(true);
 
-		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		final CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
 		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] { warningMock, errorMock });
 
-		CleanUpContext contextMock = mock(CleanUpContext.class);
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
 		when(contextMock.getAST()).thenReturn(compilationUnitMock);
 
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
 
 		// when
-		ICleanUpFix result = cleanUp.createFix(contextMock);
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
 
 		// then
 		assertNull(result);
@@ -182,17 +186,17 @@ public class ClassOrganizerSaveCleanUpTest {
 	@Test
 	public void shouldntCreateFix() throws CoreException {
 		// given
-		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		final CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
 		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] {});
 
-		CleanUpContext contextMock = mock(CleanUpContext.class);
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
 		when(contextMock.getAST()).thenReturn(compilationUnitMock);
 
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
 		preparePartialMockOfCleanUp(contextMock);
 
 		// when
-		ICleanUpFix result = cleanUp.createFix(contextMock);
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
 
 		// then
 		assertNotNull(result);
@@ -201,20 +205,20 @@ public class ClassOrganizerSaveCleanUpTest {
 	@Test
 	public void shouldCreateFixWhenCompileWarningsOccur() throws CoreException {
 		// given
-		IProblem warningMock = mock(IProblem.class);
+		final IProblem warningMock = mock(IProblem.class);
 		when(warningMock.isError()).thenReturn(false);
 
-		CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		final CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
 		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] { warningMock });
 
-		CleanUpContext contextMock = mock(CleanUpContext.class);
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
 		when(contextMock.getAST()).thenReturn(compilationUnitMock);
 
 		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
 		preparePartialMockOfCleanUp(contextMock);
 
 		// when
-		ICleanUpFix result = cleanUp.createFix(contextMock);
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
 
 		// then
 		assertNotNull(result);
@@ -225,25 +229,52 @@ public class ClassOrganizerSaveCleanUpTest {
 		// given
 
 		// when
-		CompilationUnitSorterFacade compilationUnitSorterFacade = cleanUp.getCompilationUnitSorterFacade();
+		final CompilationUnitSorterFacade compilationUnitSorterFacade = cleanUp.getCompilationUnitSorterFacade();
 
 		// then
 		assertNotNull(compilationUnitSorterFacade);
 	}
 
-	private void preparePartialMockOfCleanUp(CleanUpContext contextMock) throws JavaModelException, CoreException {
-		CompilationUnitSorterFacade facadeMock = mockFacade();
+	@Test
+	public void shouldCreateFixWhenIgnoreCompileErrors() throws CoreException {
+		// given
+		final IProblem warningMock = mock(IProblem.class);
+		when(warningMock.isError()).thenReturn(false);
+		final IProblem errorMock = mock(IProblem.class);
+		when(errorMock.isError()).thenReturn(true);
+
+		final CompilationUnit compilationUnitMock = mock(CompilationUnit.class);
+		when(compilationUnitMock.getProblems()).thenReturn(new IProblem[] { errorMock });
+
+		final CleanUpContext contextMock = mock(CleanUpContext.class);
+		when(contextMock.getAST()).thenReturn(compilationUnitMock);
+
+		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.CLEANUP_ID)).thenReturn(true);
+		when(cleanOptionsMock.isEnabled(ClassOrganizerSaveCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY))
+				.thenReturn(true);
+		preparePartialMockOfCleanUp(contextMock);
+
+		// when
+		final ICleanUpFix result = cleanUp.createFix(contextMock);
+
+		// then
+		assertNotNull(result);
+	}
+
+	private void preparePartialMockOfCleanUp(final CleanUpContext contextMock) throws JavaModelException, CoreException {
+		final CompilationUnitSorterFacade facadeMock = mockFacade();
 		cleanUp = mock(ClassOrganizerSaveCleanUp.class);
 		doCallRealMethod().when(cleanUp).setOptions(cleanOptionsMock);
 		when(cleanUp.createFix(contextMock)).thenCallRealMethod();
 		when(cleanUp.getCompilationUnitSorterFacade()).thenReturn(facadeMock);
 		when(cleanUp.isCleanUpEnabled()).thenReturn(true);
+		when(cleanUp.ignoreCompilationErrors()).thenReturn(true);
 		cleanUp.setOptions(cleanOptionsMock);
 	}
 
 	private CompilationUnitSorterFacade mockFacade() throws JavaModelException {
-		CompilationUnitSorterFacade facadeMock = mock(CompilationUnitSorterFacade.class);
-		TextEdit textEditMock = mock(TextEdit.class);
+		final CompilationUnitSorterFacade facadeMock = mock(CompilationUnitSorterFacade.class);
+		final TextEdit textEditMock = mock(TextEdit.class);
 		when(
 				facadeMock.sort(any(CompilationUnit.class), any(ClassElementComparator.class), anyInt(),
 						any(CategorizedTextEditGroup.class))).thenReturn(textEditMock);

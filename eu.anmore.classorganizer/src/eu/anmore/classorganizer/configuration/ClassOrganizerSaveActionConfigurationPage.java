@@ -10,6 +10,6 @@ import eu.anmore.classorganizer.ClassOrganizerSaveCleanUp;
 public class ClassOrganizerSaveActionConfigurationPage extends AbstractOrganizerConfigurationPage {
 
 	public ClassOrganizerSaveActionConfigurationPage() {
-		super(ClassOrganizerSaveCleanUp.CLEANUP_ID);
+		super(ClassOrganizerSaveCleanUp.CLEANUP_ID, ClassOrganizerSaveCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY);
 	}
 }

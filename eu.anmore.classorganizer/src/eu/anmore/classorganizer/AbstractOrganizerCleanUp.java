@@ -1,5 +1,8 @@
 package eu.anmore.classorganizer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -22,13 +25,14 @@ import eu.anmore.classorganizer.utils.CompilationUnitSorterFacade;
  */
 public abstract class AbstractOrganizerCleanUp implements ICleanUp {
 
-	public AbstractOrganizerCleanUp(String cleanUpId) {
+	public AbstractOrganizerCleanUp(final String cleanUpId, final String ignoreCompilationErrorKey) {
 		this.cleanUpId = cleanUpId;
+		this.ignoreCompilationErrorKey = ignoreCompilationErrorKey;
 	}
 
 	@Override
-	public RefactoringStatus checkPreConditions(IJavaProject project, ICompilationUnit[] compilationUnits,
-			IProgressMonitor monitor) throws CoreException {
+	public RefactoringStatus checkPreConditions(final IJavaProject project, final ICompilationUnit[] compilationUnits,
+			final IProgressMonitor monitor) throws CoreException {
 		if (isCleanUpEnabled()) {
 			status = new RefactoringStatus();
 		}
@@ -36,7 +40,7 @@ public abstract class AbstractOrganizerCleanUp implements ICleanUp {
 	}
 
 	@Override
-	public RefactoringStatus checkPostConditions(IProgressMonitor monitor) throws CoreException {
+	public RefactoringStatus checkPostConditions(final IProgressMonitor monitor) throws CoreException {
 		try {
 			if (status == null || status.isOK()) {
 				return new RefactoringStatus();
@@ -49,9 +53,10 @@ public abstract class AbstractOrganizerCleanUp implements ICleanUp {
 	}
 
 	@Override
-	public ICleanUpFix createFix(CleanUpContext context) throws CoreException {
-		CompilationUnit compilationUnit = context.getAST();
-		if (compilationUnit == null || !isCleanUpEnabled() || hasCompilationError(compilationUnit)) {
+	public ICleanUpFix createFix(final CleanUpContext context) throws CoreException {
+		final CompilationUnit compilationUnit = context.getAST();
+		if (compilationUnit == null || !isCleanUpEnabled()
+				|| (!ignoreCompilationErrors() && hasCompilationError(compilationUnit))) {
 			return null;
 		}
 		return ClassOrderFix.createCleanUp(compilationUnit, getCompilationUnitSorterFacade());
@@ -59,22 +64,26 @@ public abstract class AbstractOrganizerCleanUp implements ICleanUp {
 
 	@Override
 	public CleanUpRequirements getRequirements() {
-		boolean changedRegionsRequired = false;
-		boolean isUpdate = isCleanUpEnabled();
+		final boolean changedRegionsRequired = false;
+		final boolean isUpdate = isCleanUpEnabled();
 		return new CleanUpRequirements(isUpdate, isUpdate, changedRegionsRequired, null);
 	}
 
 	@Override
 	public String[] getStepDescriptions() {
+		final List<String> result = new ArrayList<String>();
 		if (isCleanUpEnabled()) {
-			return new String[] { "Organize class order using ClassOrganizer" };
+			result.add("Organize class order using ClassOrganizer");
+		}
+		if (ignoreCompilationErrors()) {
+			result.add("Organize class with compilation errors");
 		}
 
-		return null;
+		return result.toArray(new String[result.size()]);
 	}
 
 	@Override
-	public void setOptions(CleanUpOptions options) {
+	public void setOptions(final CleanUpOptions options) {
 		this.options = options;
 	}
 
@@ -86,14 +95,20 @@ public abstract class AbstractOrganizerCleanUp implements ICleanUp {
 		return options.isEnabled(cleanUpId);
 	}
 
-	private boolean hasCompilationError(CompilationUnit compilationUnit) throws CoreException {
-		for (IProblem problem : compilationUnit.getProblems()) {
+	protected boolean ignoreCompilationErrors() {
+		return options.isEnabled(ignoreCompilationErrorKey);
+	}
+
+	private boolean hasCompilationError(final CompilationUnit compilationUnit) throws CoreException {
+		for (final IProblem problem : compilationUnit.getProblems()) {
 			if (problem.isError()) {
 				return true;
 			}
 		}
 		return false;
 	}
+
+	private final String ignoreCompilationErrorKey;
 
 	private final String cleanUpId;
 

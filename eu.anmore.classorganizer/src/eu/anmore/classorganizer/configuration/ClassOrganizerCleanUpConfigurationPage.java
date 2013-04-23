@@ -10,6 +10,6 @@ import eu.anmore.classorganizer.ClassOrganizerCleanUp;
 public class ClassOrganizerCleanUpConfigurationPage extends AbstractOrganizerConfigurationPage {
 
 	public ClassOrganizerCleanUpConfigurationPage() {
-		super(ClassOrganizerCleanUp.CLEANUP_ID);
+		super(ClassOrganizerCleanUp.CLEANUP_ID, ClassOrganizerCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY);
 	}
 }

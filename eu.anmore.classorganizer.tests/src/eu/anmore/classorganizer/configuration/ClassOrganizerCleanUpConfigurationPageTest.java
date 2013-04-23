@@ -1,5 +1,9 @@
 package eu.anmore.classorganizer.configuration;
 
+import static eu.anmore.classorganizer.ClassOrganizerCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY;
+import static eu.anmore.classorganizer.configuration.AbstractOrganizerConfigurationPage.ACTIVATE_CHECKBOX_ID;
+import static eu.anmore.classorganizer.configuration.AbstractOrganizerConfigurationPage.COMPILATION_ERROR_CHECKBOX_ID;
+import static eu.anmore.classorganizer.configuration.AbstractOrganizerConfigurationPage.WIDGET_ID_PROPERTY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -36,7 +40,7 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 		// given
 
 		// when
-		String preview = page.getPreview();
+		final String preview = page.getPreview();
 
 		// then
 		assertNotNull(preview);
@@ -45,13 +49,13 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 	@Test
 	public void shouldGetSelectedCleanUp() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		when(optionsMock.isEnabled(ClassOrganizerCleanUp.CLEANUP_ID)).thenReturn(true);
 
 		page.setOptions(optionsMock);
 
 		// when
-		int result = page.getSelectedCleanUpCount();
+		final int result = page.getSelectedCleanUpCount();
 
 		// then
 		assertEquals(1, result);
@@ -60,11 +64,11 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 	@Test
 	public void shouldntGetSelectedCleanUp() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
 		// when
-		int result = page.getSelectedCleanUpCount();
+		final int result = page.getSelectedCleanUpCount();
 
 		// then
 		assertEquals(0, result);
@@ -73,54 +77,55 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 	@Test
 	public void shouldCreateContent() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
 		// when
-		Composite createContents = page.createContents(new Shell());
+		final Composite createContents = page.createContents(new Shell());
 
 		// then
 		assertNotNull(createContents);
 	}
 
 	@Test
-	public void shouldAddCheckBoxToPage() {
+	public void shouldAddActivateCheckBoxToPage() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
 		// when
-		Composite createContents = page.createContents(new Shell());
+		final Composite createContents = page.createContents(new Shell());
 
 		// then
-		Button checkBox = findCheckBox(createContents);
+		final Button checkBox = findCheckBox(createContents, ACTIVATE_CHECKBOX_ID);
 		assertNotNull(checkBox);
 	}
 
 	@Test
-	public void shouldAddSelectionListenerToCheckbox() {
+	public void shouldAddSelectionListenerToActivateCheckbox() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
 		// when
-		Composite createContents = page.createContents(new Shell());
+		final Composite createContents = page.createContents(new Shell());
 
 		// then
-		TypedListener listener = (TypedListener) findCheckBox(createContents).getListeners(SWT.Selection)[0];
+		final TypedListener listener = (TypedListener) findCheckBox(createContents, ACTIVATE_CHECKBOX_ID).getListeners(
+				SWT.Selection)[0];
 		assertNotNull(listener);
 	}
 
 	@Test
-	public void shouldTpdateOptionsWhenCheckboxUnselect() {
+	public void shouldTpdateOptionsWhenActivateCheckboxUnselect() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
-		Composite createContents = page.createContents(new Shell());
+		final Composite createContents = page.createContents(new Shell());
 
-		Button checkBox = findCheckBox(createContents);
-		Event eventMock = mock(Event.class);
+		final Button checkBox = findCheckBox(createContents, ACTIVATE_CHECKBOX_ID);
+		final Event eventMock = mock(Event.class);
 
 		// when
 		checkBox.notifyListeners(SWT.Selection, eventMock);
@@ -130,16 +135,16 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 	}
 
 	@Test
-	public void shouldTpdateOptionsWhenCheckboxSelect() {
+	public void shouldUpdateOptionsWhenActivateCheckboxSelect() {
 		// given
-		CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
 		page.setOptions(optionsMock);
 
-		Composite createContents = page.createContents(new Shell());
+		final Composite createContents = page.createContents(new Shell());
 
-		Button checkBox = findCheckBox(createContents);
+		final Button checkBox = findCheckBox(createContents, ACTIVATE_CHECKBOX_ID);
 		checkBox.setSelection(true);
-		Event eventMock = mock(Event.class);
+		final Event eventMock = mock(Event.class);
 
 		// when
 		checkBox.notifyListeners(SWT.Selection, eventMock);
@@ -148,12 +153,78 @@ public class ClassOrganizerCleanUpConfigurationPageTest {
 		verify(optionsMock).setOption(ClassOrganizerCleanUp.CLEANUP_ID, CleanUpOptions.TRUE);
 	}
 
-	private Button findCheckBox(Composite composite) {
-		for (Control child : composite.getChildren()) {
-			if (child instanceof Button) {
+	@Test
+	public void shouldAddCompilationErrorCheckBoxToPage() {
+		// given
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		page.setOptions(optionsMock);
+
+		// when
+		final Composite createContents = page.createContents(new Shell());
+
+		// then
+		final Button checkBox = findCheckBox(createContents, COMPILATION_ERROR_CHECKBOX_ID);
+		assertNotNull(checkBox);
+	}
+
+	@Test
+	public void shouldAddSelectionListenerToCompilationErrorCheckbox() {
+		// given
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		page.setOptions(optionsMock);
+
+		// when
+		final Composite createContents = page.createContents(new Shell());
+
+		// then
+		final TypedListener listener = (TypedListener) findCheckBox(createContents, COMPILATION_ERROR_CHECKBOX_ID)
+				.getListeners(SWT.Selection)[0];
+		assertNotNull(listener);
+	}
+
+	@Test
+	public void shouldTpdateOptionsWhenCompilationErrorCheckboxUnselect() {
+		// given
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		page.setOptions(optionsMock);
+
+		final Composite createContents = page.createContents(new Shell());
+
+		final Button checkBox = findCheckBox(createContents, COMPILATION_ERROR_CHECKBOX_ID);
+		final Event eventMock = mock(Event.class);
+
+		// when
+		checkBox.notifyListeners(SWT.Selection, eventMock);
+
+		// then
+		verify(optionsMock).setOption(ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY, CleanUpOptions.FALSE);
+	}
+
+	@Test
+	public void shouldUpdateOptionsWhenCompilationErrorCheckboxSelect() {
+		// given
+		final CleanUpOptions optionsMock = mock(CleanUpOptions.class);
+		page.setOptions(optionsMock);
+
+		final Composite createContents = page.createContents(new Shell());
+
+		final Button checkBox = findCheckBox(createContents, COMPILATION_ERROR_CHECKBOX_ID);
+		checkBox.setSelection(true);
+		final Event eventMock = mock(Event.class);
+
+		// when
+		checkBox.notifyListeners(SWT.Selection, eventMock);
+
+		// then
+		verify(optionsMock).setOption(ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY, CleanUpOptions.TRUE);
+	}
+
+	private Button findCheckBox(final Composite composite, final String widgetId) {
+		for (final Control child : composite.getChildren()) {
+			if (child instanceof Button && widgetId.equals(child.getData(WIDGET_ID_PROPERTY))) {
 				return (Button) child;
 			} else if (child instanceof Composite) {
-				return findCheckBox((Composite) child);
+				return findCheckBox((Composite) child, widgetId);
 			}
 		}
 		return null;

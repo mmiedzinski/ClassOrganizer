@@ -13,7 +13,8 @@ import eu.anmore.classorganizer.ClassOrganizerSaveCleanUp;
 public class ClassOrganizerSaveActionInitializer implements ICleanUpOptionsInitializer {
 
 	@Override
-	public void setDefaultOptions(CleanUpOptions options) {
+	public void setDefaultOptions(final CleanUpOptions options) {
 		options.setOption(ClassOrganizerSaveCleanUp.CLEANUP_ID, CleanUpOptions.TRUE);
+		options.setOption(ClassOrganizerSaveCleanUp.ENABLED_WHEN_COMPILATION_ERRORS_PROPERTY, CleanUpOptions.FALSE);
 	}
 }
