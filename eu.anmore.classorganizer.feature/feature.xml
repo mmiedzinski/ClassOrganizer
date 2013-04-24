@@ -2,7 +2,7 @@
 <feature
       id="eu.anmore.classorganizer.feature"
       label="Class Organizer"
-      version="2.0.0"
+      version="3.0.0"
       provider-name="Marcin Miedziński">
 
    <description>

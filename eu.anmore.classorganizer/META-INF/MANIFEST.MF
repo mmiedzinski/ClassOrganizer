@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Class Organizer
 Bundle-SymbolicName: eu.anmore.classorganizer;singleton:=true
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Bundle-Activator: eu.anmore.classorganizer.Activator
 Bundle-Vendor: Marcin Miedzińśki
 Require-Bundle: org.eclipse.ui,
