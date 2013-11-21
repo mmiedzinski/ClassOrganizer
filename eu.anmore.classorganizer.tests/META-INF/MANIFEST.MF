@@ -6,6 +6,6 @@ Bundle-SymbolicName: eu.anmore.classorganizer.tests
 Bundle-Version: 3.0.0
 Bundle-Vendor: Marcin Miedziński
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit4;bundle-version="4.8.1"
+Require-Bundle: org.junit;bundle-version="4.11.0"
 Bundle-ClassPath: lib/junit.jar,
  lib/mockito-all.jar
