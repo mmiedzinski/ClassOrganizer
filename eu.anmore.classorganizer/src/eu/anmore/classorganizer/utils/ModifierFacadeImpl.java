@@ -13,37 +13,38 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 public class ModifierFacadeImpl implements ModifierFacade {
 
 	@Override
-	public boolean isStatic(BodyDeclaration bodyDeclaration) {
+	public boolean isStatic(final BodyDeclaration bodyDeclaration) {
 		return Modifier.isStatic(bodyDeclaration.getModifiers());
 	}
 
 	@Override
-	public boolean isFieldDeclaration(BodyDeclaration bodyDeclaration) {
+	public boolean isFieldDeclaration(final BodyDeclaration bodyDeclaration) {
 		return bodyDeclaration.getNodeType() == ASTNode.FIELD_DECLARATION;
 	}
 
 	@Override
-	public boolean isInitializerDeclaration(BodyDeclaration bodyDeclaration) {
+	public boolean isInitializerDeclaration(final BodyDeclaration bodyDeclaration) {
 		return bodyDeclaration.getNodeType() == ASTNode.INITIALIZER;
 	}
 
 	@Override
-	public boolean isTypeDeclaration(BodyDeclaration bodyDeclaration) {
-		return bodyDeclaration.getNodeType() == ASTNode.TYPE_DECLARATION;
+	public boolean isTypeDeclaration(final BodyDeclaration bodyDeclaration) {
+		return bodyDeclaration.getNodeType() == ASTNode.TYPE_DECLARATION
+				|| bodyDeclaration.getNodeType() == ASTNode.ENUM_DECLARATION;
 	}
 
 	@Override
-	public boolean isPrivate(BodyDeclaration bodyDeclaration) {
+	public boolean isPrivate(final BodyDeclaration bodyDeclaration) {
 		return Modifier.isPrivate(bodyDeclaration.getModifiers());
 	}
 
 	@Override
-	public boolean isPublic(BodyDeclaration bodyDeclaration) {
+	public boolean isPublic(final BodyDeclaration bodyDeclaration) {
 		return Modifier.isPublic(bodyDeclaration.getModifiers());
 	}
 
 	@Override
-	public boolean isProtected(BodyDeclaration bodyDeclaration) {
+	public boolean isProtected(final BodyDeclaration bodyDeclaration) {
 		return Modifier.isProtected(bodyDeclaration.getModifiers());
 	}
 }
